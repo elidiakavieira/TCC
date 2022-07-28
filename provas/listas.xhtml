@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body bgcolor="#263A7F">
+
+	<div id="logo" align="right">
+    <p:graphicImage id="logo" value="uniprovas.png" style="align: left"/>
+    </div>
+
+<p:breadCrumb>
+    <p:menuitem value="Categories" url="index.jsf" />
+    <p:menuitem value="INÍCIO" url="index.jsf" />
+    <p:menuitem value="LISTAS" url="listas.jsf" />
+    <p:menuitem value="SOBRE" url="sobre.jsf" />
+    <p:menuitem value="AJUDA" url="ajuda.jsf" />
+    <p:menuitem value="QUEM SOMOS" url="QS.jsf" />
+</p:breadCrumb>
+
+<h:form id="form2">
+		<p:dataTable id="tab2" value="#{beanProva.listaProvas}" var="c"
+			emptyMessage="Nenhum registro incluido." paginator="true" rows="25"
+			paginatorPosition="top" rowsPerPageTemplate="5,25,50" resizableColumns="true">
+
+			<p:column headerText="RA" style="text-align: center"
+				sortBy="#{c.ra}" filterBy="#{c.ra}">
+				<h:outputText value="#{c.ra}" />
+			</p:column>
+
+			<p:column headerText="Nome" style="text-align: center"
+				sortBy="#{c.nome}" filterBy="#{c.nome}">
+				<h:outputText value="#{c.nome}" />
+			</p:column>
+
+			<p:column headerText="Curso" style="text-align: center"
+				sortBy="#{c.curso}" filterBy="#{c.curso}">
+				<h:outputText value="#{c.curso}" />
+			</p:column>
+
+			<p:column headerText="Disciplina" style="text-align: center"
+				sortBy="#{c.disciplina}" filterBy="#{c.disciplina}">
+				<h:outputText value="#{c.disciplina}" />
+			</p:column>
+
+			<p:column headerText="Data" style="text-align: center"
+				sortBy="#{c.disciplina}" filterMatchMode="contains" filterBy="#{c.data}">
+				<h:outputText value="#{c.data}" />
+			</p:column>
+
+			<p:column headerText="Hora" style="text-align: center"
+				sortBy="#{c.hora}" filterBy="#{c.hora}">
+				<h:outputText value="#{c.hora}" />
+			</p:column>
+
+			<p:column headerText="Observação" style="text-align: center"
+				sortBy="#{c.observacao}" filterBy="#{c.observacao}">
+				<h:outputText value="#{c.observacao}" />
+			</p:column>
+
+		</p:dataTable>
+			
+	
+
+	<h:panelGrid>	
+	<h:commandLink>	
+	<p:graphicImage value="pdf.png" />
+	<p:dataExporter type="pdf" target="tab2" fileName="provas"  />
+	</h:commandLink>
+	</h:panelGrid>
+	
+ 
+	</h:form>
+
+
+
+	<p:dialog header="Deseja realmente excluir este registro?"	widgetVar="confirmation" modal="true" appendTo="@(body)" resizable="false" responsive="true">
+		<h:form id="dlg">
+			<p:panelGrid id="infosCli" columns="2" style="margin-bottom:10px">
+				<p:outputLabel for="ra" value="RA:" />
+				<p:inputText id="ra" value="#{beanProva.prova.ra}"
+					readonly="true" />
+				<p:outputLabel for="nome" value="Nome:" />
+				<p:inputText id="nome" value="#{beanProva.prova.nome}"
+					readonly="true" />
+				<p:commandButton id="btnSim" value="Sim"
+					oncomplete="PF('confirmation').hide(); retun false;"
+					action="#{beanProva.excluir()}" update=":form2:tab2" />
+				<p:commandButton id="btnNao" value="Não"
+					onclick="PF('confirmation').hide();" type="button" />
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+
+
+	<p:dialog header="Editar Prova"	widgetVar="confirmationEdit" modal="true" appendTo="@(body)" resizable="false" responsive="true">
+		<h:form id="dlgEdit">
+			<p:panelGrid id="infosCliEdit" columns="2" style="margin-bottom:10px">
+
+				<p:outputLabel for="ra" value="RA:" />
+				<p:inputText id="ra" value="#{beanProva.prova.ra}" />
+
+				<p:outputLabel for="nome" value="Nome:" />
+				<p:inputText id="nome" value="#{beanProva.prova.nome}" />
+
+				<p:outputLabel for="curso" value="Curso:" />
+				<p:inputText id="curso" value="#{beanProva.prova.curso}" />
+				
+				<p:outputLabel for="disciplina" value="Disciplina:" />
+				<p:inputText id="disciplina" value="#{beanProva.prova.disciplina}" />
+												
+				<p:outputLabel for="data" value="Data:" />
+				<p:inputMask id="data" value="#{beanProva.prova.data}" mask="99/99/9999" />
+
+				<p:outputLabel for="hora" value="Hora:" />
+				<p:inputMask id="hora" value="#{beanProva.prova.hora}" mask="99:99"/>
+				
+				<p:outputLabel for="observacao" value="Observação:" />
+				<p:inputText id="observacao" value="#{beanProva.prova.observacao}" />
+
+
+				<p:commandButton id="btnSalvar" icon="ui-icon-disk" value="Salvar"
+					oncomplete="PF('confirmationEdit').hide(); retun false;"
+					action="#{beanProva.editar()}" update=":form2:tab2" />
+				<p:commandButton id="btnCancelar" icon="ui-icon-close" value="Cancelar"
+					onclick="PF('confirmationEdit').hide();" type="button" />
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+	
+
+    
+    
+
+</body> 
+</html>

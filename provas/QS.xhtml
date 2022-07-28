@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+         xmlns:p="http://primefaces.org/ui"  
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body bgcolor="#263A7F" text="black">  
+
+ <h:form id="form1" >
+
+<div id="corp" align="center">
+
+
+	<div id="logo" align="right">
+    <p:graphicImage id="logo" value="uniprovas.png" style="align: left"/>
+    </div>
+
+<p:breadCrumb>
+    <p:menuitem value="Categories" url="index.jsf" />
+    <p:menuitem value="INÍCIO" url="index.jsf"  />
+    <p:menuitem value="LISTAS" url="listas.jsf"  />
+    <p:menuitem value="SOBRE" url="sobre.jsf" />
+    <p:menuitem value="AJUDA" url="ajuda.jsf" />
+    <p:menuitem value="QUEM SOMOS" url="QS.jsf" />
+</p:breadCrumb>
+	
+		<p:panel >
+<p:panelGrid columns="2">
+    <f:facet name="header">
+        <p:graphicImage id="abcd" value="abcd.png"/>
+    </f:facet>
+     
+    <h:outputText value="Name:" />
+    <h:outputText value="Elidia Vieira" />
+     
+    <h:outputText value="Team:" />
+    <h:outputText value="ABC-Development" />
+     
+    <h:outputText value="Position:" />
+    <h:outputText value="Desenvolvedor" />
+     
+    <h:outputText value="Number:" />
+    <h:outputText value="(15) 99632-7754" />
+</p:panelGrid>
+			
+			<br/> <br/> <br/>
+	
+		</p:panel>
+		
+				</div>
+	</h:form>
+</body> 
+</html>

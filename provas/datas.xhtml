@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+            xmlns:p="http://primefaces.org/ui"     
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+
+<body bgcolor="#263A7F">
+
+	<div id="logo" align="right">
+    <p:graphicImage id="logo" value="uniprovas.png" style="align: left"/>
+    </div>    
+
+<p:breadCrumb>
+    <p:menuitem value="Categories" url="index.jsf" />
+    <p:menuitem value="INÍCIO" url="index.jsf" />
+    <p:menuitem value="LISTAS" url="listas.jsf" />
+    <p:menuitem value="SOBRE" url="sobre.jsf" />
+    <p:menuitem value="AJUDA" url="ajuda.jsf" />
+    <p:menuitem value="QUEM SOMOS" url="QS.jsf" />
+</p:breadCrumb>
+    
+ <h:form id="form1">
+		<p:panel id="panel" header="Datas"
+			style="margin-bottom:10px;" >
+
+			<p:messages id="messages" />
+			<p:panelGrid columns="2" cellpadding="1">
+							
+				<p:outputLabel for="reg" value="Regular:" />
+				<p:inputMask id="reg" value="#{beanData.data.regular}"  mask="99/99 - 99/99" />
+
+				<p:outputLabel for="sub" value="Sub:" />
+				<p:inputMask id="sub" value="#{beanData.data.sub}"  mask="99/99 - 99/99" />
+
+				<p:outputLabel for="exa" value="Exame:" />
+				<p:inputMask id="exa" value="#{beanData.data.exame}" mask="99/99 - 99/99" />
+
+				<p:outputLabel for="sube" value="Sub Exame:" />
+				<p:inputMask id="sube" value="#{beanData.data.subexame}" mask="99/99 - 99/99" />
+
+
+				<p:outputLabel value="" />
+				<p:commandButton id="btnSalvar" icon="ui-icon-disk" value="Salvar" 
+				update=":form1 :form2" action="#{beanData.salvar()}" />
+			</p:panelGrid>
+		</p:panel>
+	</h:form>
+	
+	<h:form id="form2">
+		<p:dataTable id="tab2"  value="#{beanData.listaDatas}" var="c"
+			emptyMessage="Nenhum registro incluido." >
+
+			<p:column headerText="regular" style="text-align: center" >
+				<h:outputText value="#{c.regular}" />
+			</p:column>
+
+			<p:column headerText="Sub" style="text-align: center" >
+				<h:outputText value="#{c.sub}" />
+			</p:column>
+			
+			<p:column headerText="Exame" style="text-align: center" >
+				<h:outputText value="#{c.exame}" />
+			</p:column>
+			
+			<p:column headerText="Sub Exame" style="text-align: center" >
+				<h:outputText value="#{c.subexame}" />
+			</p:column>
+			
+					
+							<p:column headerText="EXCLUIR" style="text-align: center" width="100">
+				<p:commandButton icon="ui-icon-trash" title="Excluir"
+					update="dlg:infosCli" onclick="PF('confirmation').show();">
+					<f:setPropertyActionListener value="#{c}"
+						target="#{beanData.data}" />
+				</p:commandButton>
+			</p:column>
+		
+		</p:dataTable>
+	</h:form>
+	
+	
+	<p:dialog header="Deseja realmente excluir este registro?"	widgetVar="confirmation" modal="true" appendTo="@(body)" resizable="false" responsive="true">
+		<h:form id="dlg">
+			<p:panelGrid id="infosCli" columns="2" style="margin-bottom:10px">
+				<p:outputLabel for="id" value="id:" />
+				<p:inputText id="id" value="#{beanData.data.iddatas}"
+					readonly="true" />
+
+				<p:commandButton id="btnSim" value="Sim"
+					oncomplete="PF('confirmation').hide(); retun false;"
+					action="#{beanData.excluir()}" update=":form2:tab2" />
+				<p:commandButton id="btnNao" value="Não"
+					onclick="PF('confirmation').hide();" type="button" />
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+
+
+	<p:dialog header="Novo agendamento de Prova"	widgetVar="confirmationEdit" modal="true" appendTo="@(body)" resizable="false" responsive="true">
+		<h:form id="dlgEdit">
+			<p:panelGrid id="infosCliEdit" columns="2" style="margin-bottom:10px">
+
+				<p:outputLabel for="reg" value="Regular:" />
+				<p:inputMask id="reg" value="#{beanData.data.regular}"  mask="99/99 - 99/99" />
+
+				<p:outputLabel for="sub" value="Sub:" />
+				<p:inputMask id="sub" value="#{beanData.data.sub}"  mask="99/99 - 99/99" />
+
+				<p:outputLabel for="exa" value="Exame:" />
+				<p:inputMask id="exa" value="#{beanData.data.exame}" mask="99/99 - 99/99" />
+
+				<p:outputLabel for="sube" value="Sub Exame:" />
+				<p:inputMask id="sube" value="#{beanData.data.subexame}" mask="99/99 - 99/99" />
+
+
+
+
+				<p:commandButton id="btnSalvar" icon="ui-icon-disk" value="Salvar"
+					oncomplete="PF('confirmationEdit').hide(); retun false;"
+					action="#{beanData.salvar()}" update=":form2:tab2" />
+				<p:commandButton id="btnCancelar" icon="ui-icon-close" value="Cancelar"
+					onclick="PF('confirmationEdit').hide();" type="button" />
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+	
+
+</body> 
+</html>
